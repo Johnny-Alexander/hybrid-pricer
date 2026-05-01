@@ -5,7 +5,7 @@ Closed-form Black–Scholes pricer and risk analysis for a cross-asset hybrid:
 > **An SPX call that pays only if USDJPY is above a barrier at expiry.**
 
 $$
-V_T = \max(S_T - K, 0) \cdot \mathbf{1}\{X_T > B\}
+V_T = \max(S_T - K, 0) \cdot \mathbf{1}_{\{X_T > B\}}
 $$
 
 This repo contains:
@@ -34,16 +34,15 @@ The structure looks tame on paper but the cross-Greeks make it operationally sub
 Under the domestic risk-neutral measure $\mathbb{Q}^d$:
 
 $$
-\frac{dS}{S} = (r_d - q)\,dt + \sigma_S\,dW^S, \qquad
-\frac{dX}{X} = (r_d - r_f)\,dt + \sigma_X\,dW^X, \qquad
-d\langle W^S, W^X\rangle = \rho\,dt
+\frac{dS}{S} = (r_d - q)\\,dt + \sigma_S\\,dW^S, \qquad
+\frac{dX}{X} = (r_d - r_f)\\,dt + \sigma_X\\,dW^X, \qquad
+d\langle W^S, W^X\rangle = \rho\\,dt
 $$
 
 The price is:
 
 $$
-V_0 = S_0 e^{-qT}\, M_2\!\left(d_1^S,\; d_2^X + \rho\sigma_S\sqrt{T};\; \rho\right)
-   - K e^{-r_d T}\, M_2\!\left(d_2^S,\; d_2^X;\; \rho\right)
+V_0 = S_0 e^{-qT}\\, M_2\\!\left(d_1^S,\\; d_2^X + \rho\sigma_S\sqrt{T};\\; \rho\right) - K e^{-r_d T}\\, M_2\\!\left(d_2^S,\\; d_2^X;\\; \rho\right)
 $$
 
 where $M_2(\cdot,\cdot;\rho)$ is the standard bivariate normal CDF and the $d$-terms are defined as in standard BS, with $X$ versions referencing the FX barrier $B$. The first term comes from a numeraire change to $S$, which shifts the FX log-mean by $\rho\sigma_S\sigma_X T$.
